@@ -1,0 +1,162 @@
+// Enter your name and surname
+unit Q4;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls, math, Spin, ExtCtrls, pngimage;
+
+type
+  TQuest4_U = class(TForm)
+    redDisplay: TRichEdit;
+    btnTop3: TButton;
+    btnLoadResult: TButton;
+    Panel1: TPanel;
+    Image1: TImage;
+    GroupBox1: TGroupBox;
+    btnUpdateResults: TButton;
+    cmbTeam1: TComboBox;
+    cmbTeam2: TComboBox;
+    Label1: TLabel;
+    sedScore1: TSpinEdit;
+    sedScore2: TSpinEdit;
+    Label2: TLabel;
+    Label3: TLabel;
+    btnDisplay: TButton;
+    sedRound: TSpinEdit;
+    Label4: TLabel;
+    redQ4_4: TRichEdit;
+    procedure FormActivate(Sender: TObject);
+    procedure btnLoadResultClick(Sender: TObject);
+    procedure btnUpdateResultsClick(Sender: TObject);
+    procedure btnDisplayClick(Sender: TObject);
+    procedure btnTop3Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Quest4_U: TQuest4_U;
+
+  // Provided code
+  arrParticipants: array [1 .. 8] of string = (
+    'NWD',
+    'OIS',
+    'DHS',
+    'GCB',
+    'DGH',
+    'NGH',
+    'WVB',
+    'EDC'
+  );
+  arrResult: array [1 .. 8, 1 .. 5] of String;
+
+  { arrResult2: array [1 .. 8, 1 .. 5] of String = (('3', '3', '3', '3', '0'),
+    ('0', '3', '0', '*', '3'), ('3', '0', '0', '*', '3'),
+    ('3', '0', '*', '0', '3'), ('3', '3', '0', '3', '0'),
+    ('0', '3', '3', '0', '0'), ('0', '0', '*', '3', '3'),
+    ('0', '0', '3', '0', '0'));
+    }
+implementation
+
+{$R *.dfm}
+
+procedure TQuest4_U.btnDisplayClick(Sender: TObject);
+begin
+  // Provided code
+  redDisplay.Clear;
+
+  // Question 4.2
+
+end;
+
+procedure TQuest4_U.btnLoadResultClick(Sender: TObject);
+var
+  myfile: textfile;
+  ipos: integer;
+  sline, steam1, steam2, sround, sscore1, sscore2: string;
+begin
+  // Question 4.1
+  assignfile(myfile, 'Results.txt');
+  reset(myfile);
+  while not eof(myfile) do
+  begin
+    readln(myfile, sline);
+
+    // round
+    ipos := pos('#', sline);
+    sround := copy(sline, 1, ipos - 1);
+
+    // team 1
+    delete(sline, 1, ipos);
+    ipos := pos('#', sline);
+    steam1 := copy(sline, 1, ipos - 1);
+
+    // team 2
+    delete(sline, 1, ipos);
+    ipos := pos('#', sline);
+    steam2 := copy(sline, 1, ipos - 1);
+
+    // score1
+    delete(sline, 1, ipos);
+    // redDisplay.Lines.Add(sline);
+    ipos := pos('#', sline);
+    sscore1 := copy(sline, 1, ipos - 1);
+    //redDisplay.Lines.Add(sscore1);
+
+
+    // redDisplay.Lines.Add(sline);
+    // score 2
+
+  end;
+  closefile(myfile);
+
+end;
+
+procedure TQuest4_U.btnTop3Click(Sender: TObject);
+begin
+  // Question 4.4
+
+end;
+
+procedure TQuest4_U.btnUpdateResultsClick(Sender: TObject);
+begin
+  // Question 4.3
+
+end;
+
+// **************SUPPLIED CODE*******************
+
+procedure TQuest4_U.FormActivate(Sender: TObject);
+var
+  I, r, c: integer;
+begin
+  // format display
+  redDisplay.Paragraph.TabCount := 4;
+  redDisplay.Paragraph.Tab[0] := 100;
+  redDisplay.Paragraph.Tab[1] := 150;
+  redDisplay.Paragraph.Tab[2] := 200;
+  redDisplay.Paragraph.Tab[3] := 250;
+  redDisplay.Paragraph.Tab[4] := 300;
+
+  // Clear any existing items
+  cmbTeam1.Items.Clear;
+  cmbTeam2.Items.Clear;
+
+  // Add participanting schools array elements to the ComboBox
+  for I := Low(arrParticipants) to High(arrParticipants) do
+  begin
+    cmbTeam1.Items.Add(arrParticipants[I]);
+    cmbTeam2.Items.Add(arrParticipants[I]);
+  end;
+  // initialize all results to * (not captured yet)
+  for r := 1 to 8 do
+    for c := 1 to 5 do
+      arrResult[r, c] := '*';
+
+end;
+
+end.
